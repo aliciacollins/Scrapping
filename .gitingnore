@@ -1,0 +1,9 @@
+.DS_Score
+
+node_modules/
+package-lock.json
+yarn.lock
+
+
+
+https://aqueous-garden-63508.herokuapp.com/ | https://git.heroku.com/aqueous-garden-63508.git
