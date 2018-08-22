@@ -16,7 +16,7 @@ var cheerio = require('cheerio');
 // mongoose.connect(MONGODB_URI);
 mongoose.connect("mongodb://localhost/Scrapping");
 
-var Article = require("./models/Article.js");
+var Article = require("./models/Article");
 
 var PORT = process.env.PORT || 8000;
 var app = express();
@@ -54,7 +54,7 @@ app.get("/scrape", function(req,res){
 
         Article.create(result)
         .then(function(dbArticle){
-            console.log("dbArticle",dbArticle)
+            console.log("dbArticle2222",dbArticle)
         })
         .catch(function(err) {
             // If an error occurred, send it to the client
@@ -67,10 +67,10 @@ app.get("/scrape", function(req,res){
 });
 
 app.get("/", function(req,res){
-    Article.findAll({}.then(function(dbArticles){
+    Article.find({}).then(function(dbArticles){
         console.log("dbArticles",dbArticles);
         res.render("index", {articles: dbArticles})
-    }))
+    })
 })
 
 
