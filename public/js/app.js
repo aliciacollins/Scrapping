@@ -11,8 +11,8 @@
 $.getJSON("/articles", function(data) {
     // For each one
     for (var i = 0; i < data.length; i++) {
-      // only displaying Article note which was changed to note and title and link says summary and image undefined
-      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link +"<br />"+ data[i].image +"<br />"+ data[i].summary + "</p>");
+      // only displaying Article note which was changed to note and title and link says summary and image undefined+"<img src="+ data[i].image +">"
+      $("#articles").append("<p data-id='" + data[i]._id + "'>" + "<b>" +data[i].title + "</b><br />" + data[i].link +"<br />" +"<br />" + "</p>");
     }
   });
 

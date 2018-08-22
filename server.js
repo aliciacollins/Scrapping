@@ -8,13 +8,13 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require('cheerio');
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-//var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/Scrapping ,{ useNewUrlParser: true }";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Scrapping";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-//mongoose.Promise = Promise;
-// mongoose.connect(MONGODB_URI);
-mongoose.connect("mongodb://localhost/Scrapping");
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+// mongoose.connect("mongodb://localhost/Scrapping");
 
 var Article = require("./models/Article");
 
@@ -34,7 +34,7 @@ app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: "main" }));
 app.set('view engine', '.hbs');
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/scrapping");
+mongoose.connect("mongodb://localhost/sssscrapping");
 
 
 app.get("/scrape", function (req, res) {
@@ -60,23 +60,23 @@ app.get("/scrape", function (req, res) {
                     // If an error occurred, send it to the client
                     return res.json(err);
                 });
-        });
-        
+        })
+
         res.send("Scrape Complete");
     });
 });
 
-// app.get("/", function (req, res) {
-//     Article.find({})
-//     .then(function (dbArticles) {
-//         console.log("dbArticles", dbArticles);
-//         res.render("index", { articles: dbArticles });
-//     })
-//         .catch(function (err) {
-//             // If an error occurred, send it to the client
-//             res.json(err);
-//         });
-// });
+app.get("/", function (req, res) {
+    Article.find({})
+        .then(function (dbArticles) {
+            console.log("dbArticles", dbArticles);
+            res.render("index", { articles: dbArticles });
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
 
 
 //why am I only getting the title and link summary and image undefined when sent to html

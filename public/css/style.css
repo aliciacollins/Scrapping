@@ -1,3 +1,8 @@
+.container {
+    position: relative;
+    text-align: center;
+    color:white;
+}
 body {
     overflow-y:hidden;
 }
@@ -9,4 +14,9 @@ img{
     color: rgb(104, 6, 6)
     /* bootstrap is overriding this */
   }
+  .top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
   
