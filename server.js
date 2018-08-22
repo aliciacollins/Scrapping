@@ -49,7 +49,7 @@ app.get("/scrape", function(req,res){
 ///use this or element
         result.title =$(element).find('a').attr("title");
         result.link = "https://www.azcardinals.com/" + $(element).find('a').attr("href");
-        result.summary =$(element).find(".d3-o-media-object__summary").text();
+        result.summary =$(element).find(".d3-o-media-object__summary").text().trim();
         result.img =$(element).find("img").attr('src');
 
         Article.create(result)
@@ -68,7 +68,7 @@ app.get("/scrape", function(req,res){
 
 app.get("/", function(req,res){
     Article.findAll({}.then(function(dbArticles){
-        console.log(dbArticles);
+        console.log("dbArticles",dbArticles);
         res.render("index", {articles: dbArticles})
     }))
 })
