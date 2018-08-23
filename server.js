@@ -16,7 +16,7 @@ mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 // mongoose.connect("mongodb://localhost/Scrapping");
 
-var Article = require("./models/Article");
+var db = require("./models");
 
 var PORT = process.env.PORT || 8000;
 var app = express();
@@ -34,7 +34,7 @@ app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: "main" }));
 app.set('view engine', '.hbs');
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/sssscrapping");
+mongoose.connect("mongodb://localhost/scrapping");
 
 
 app.get("/scrape", function (req, res) {
@@ -52,7 +52,7 @@ app.get("/scrape", function (req, res) {
             result.summary = $(element).find(".d3-o-media-object__summary").text().trim();
             result.img = $(element).find("img").attr('src');
 
-            Article.create(result)
+            db.Article.create(result)
                 .then(function (dbArticle) {
                     console.log("dbArticle2222", dbArticle)
                 })
@@ -67,7 +67,7 @@ app.get("/scrape", function (req, res) {
 });
 
 app.get("/", function (req, res) {
-    Article.find({})
+    db.Article.find({})
         .then(function (dbArticles) {
             console.log("dbArticles", dbArticles);
             res.render("index", { articles: dbArticles });
@@ -79,10 +79,9 @@ app.get("/", function (req, res) {
 });
 
 
-//why am I only getting the title and link summary and image undefined when sent to html
 app.get("/articles", function (req, res) {
     // Grab every document in the Articles collection
-    Article.find({})
+    db.Article.find({})
         .then(function (dbArticle) {
             // If we were able to successfully find Articles, send them back to the client
             res.json(dbArticle);
@@ -93,39 +92,39 @@ app.get("/articles", function (req, res) {
         });
 });
 
-// Route for grabbing a specific Article by id, populate it with it's note
-// app.get("/articles/:id", function (req, res) {
-//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-//     db.Article.findOne({ _id: req.params.id })
-//         // ..and populate all of the notes associated with it
-//         .populate("note")
-//         .then(function (dbArticle) {
-//             // If we were able to successfully find an Article with the given id, send it back to the client
-//             res.json(dbArticle);
-//         })
-//         .catch(function (err) {
-//             // If an error occurred, send it to the client
-//             res.json(err);
-//         });
-// });
+//Route for grabbing a specific Article by id, populate it with it's note
+app.get("/articles/:id", function (req, res) {
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.Article.findOne({ _id: req.params.id })
+       console.log("findOne",{_id: req.params.id})
+        .populate("notes")
+        .then(function (dbArticle) {
+            
+            res.json(dbArticle);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
 
-// // Route for saving/updating an Article's associated Note
-// app.post("/articles/:id", function (req, res) {
-//     // Create a new note and pass the req.body to the entry
-//     db.Note.create(req.body)
-//         .then(function (dbNote) {
-//             // If a Note was created successfully, find one Article 
-//             return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-//         })
-//         .then(function (dbArticle) {
-//             // If we were able to successfully update an Article, send it back to the client
-//             res.json(dbArticle);
-//         })
-//         .catch(function (err) {
-//             // If an error occurred, send it to the client
-//             res.json(err);
-//         });
-// });
+// This link is not working say undefined but is defined
+app.post("/articles/:id", function (req, res) {
+    // Create a new note and pass the req.body to the entry
+    db.Note.create(req.body)
+        .then(function (dbNote) {
+            // If a Note was created successfully, find one Article 
+            return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+        })
+        .then(function (dbArticle) {
+            // If we were able to successfully update an Article, send it back to the client
+            res.json(dbArticle);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
 
 
 
