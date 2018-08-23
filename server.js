@@ -8,7 +8,7 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require('cheerio');
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Scrapping";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapping";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
@@ -40,7 +40,7 @@ mongoose.connect("mongodb://localhost/scrapping");
 app.get("/scrape", function (req, res) {
 
     axios.get("https://www.azcardinals.com/news/").then(function (response) {
-
+        const dbArticles = []
         var $ = cheerio.load(response.data);
 
         $(".d3-l-col__col-3").each(function (i, element) {
@@ -52,17 +52,15 @@ app.get("/scrape", function (req, res) {
             result.summary = $(element).find(".d3-o-media-object__summary").text().trim();
             result.img = $(element).find("img").attr('src');
 
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    console.log("dbArticle2222", dbArticle)
-                })
-                .catch(function (err) {
-                    // If an error occurred, send it to the client
-                    return res.json(err);
-                });
-        })
+            dbArticles.push(db.Article.create(result));
+        });
 
-        res.send("Scrape Complete");
+        Promise.all(dbArticles).then(articles => {
+            console.log(articles);
+            res.send(articles);
+        }).catch(err => {
+            console.log(err);
+        });
     });
 });
 
@@ -95,11 +93,10 @@ app.get("/articles", function (req, res) {
 //Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function (req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    console.log("findOne", { _id: req.params.id })
     db.Article.findOne({ _id: req.params.id })
-       console.log("findOne",{_id: req.params.id})
-        .populate("notes")
+        .populate("note")
         .then(function (dbArticle) {
-            
             res.json(dbArticle);
         })
         .catch(function (err) {

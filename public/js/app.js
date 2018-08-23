@@ -1,15 +1,17 @@
 // Grab the articles
-document.getElementById("myButton").onclick = function (){
-  $.getJSON("/scrape",function(err,data){
-    if(err!==null) {
-      alert("New Articles are Available to Save!")
+$("#myButton").on("click", function () {
+  console.log("yooooo");
+  $.getJSON("/scrape", function (err, data) {
+    if (err !== null) {
       console.log(data)
+      window.location.reload();
     } else {
       alert('oops')
     }
+  });
 });
 $.getJSON("/articles", function(data) {
-  
+
   for (var i = 0; i < data.length; i++) {
     // id not working
     console.log("id",data[i]._id)
@@ -17,9 +19,8 @@ $.getJSON("/articles", function(data) {
   }
 });
 
-};
 //click p tag
-$(document).on("click", "p", function() {
+$(document).on("click", "p", function () {
   $("#notes").empty();
   //Save the id from the p tag
   var thisId = $(this).attr("data-id");
@@ -30,7 +31,7 @@ $(document).on("click", "p", function() {
     url: "/articles/" + thisId
   })
     // With that done, add the note information to the page
-    .then(function(data) {
+    .then(function (data) {
       console.log(data);
       // The title of the article
       $("#notes").append("<h2>" + data.title + "</h2>");
@@ -52,7 +53,7 @@ $(document).on("click", "p", function() {
 });
 
 // When you click the savenote button
-$(document).on("click", "#save", function() {
+$(document).on("click", "#save", function () {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -68,7 +69,7 @@ $(document).on("click", "#save", function() {
     }
   })
     // With that done
-    .then(function(data) {
+    .then(function (data) {
       // Log the response
       console.log(data);
       // Empty the notes section
