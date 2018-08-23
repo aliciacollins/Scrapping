@@ -1,12 +1,13 @@
 // Grab the articles as a json
 // console.log('client side running code')
-// var button = document.getElementById('myButton');
+var button = document.getElementById('myButton');
 
-// button.addEventListener('click', function(e) {
-//  console.log('button was clicked');
+button.addEventListener('click', function(e) {
+ console.log('button was clicked');
 
-// });
 
+});
+  
 
 $.getJSON("/articles", function(data) {
     // For each one
@@ -16,7 +17,6 @@ $.getJSON("/articles", function(data) {
     }
   });
 
-  
 //   // Whenever someone clicks a p tag
 //   $(document).on("click", "p", function() {
 //    // Empty the notes from the note section

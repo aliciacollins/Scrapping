@@ -1,3 +1,4 @@
+
 .container {
     position: relative;
     text-align: center;
@@ -5,6 +6,7 @@
 }
 body {
     overflow-y:hidden;
+    background-image: url("assets/img/arizona-cardinals.jpg");
 }
 img{
     width: 100%;
