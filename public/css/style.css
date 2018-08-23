@@ -1,21 +1,24 @@
-/* 
+
 .container {
     position: relative;
     text-align: center;
     color:white;
 }
 body {
-    overflow-y:hidden;
+    /* overflow-y:hidden; */
     
 }
-/* img{
+img{
     width: 100%;
-} */
+}
 .btn{
     float:right;
-    color: rgb(104, 6, 6)
-    /* bootstrap is overriding this */
-  }
+    background-color: rgb(104, 6, 6) !important;
+    border-color: black !important;
+    margin-top: 2px;
+    margin-right: 15px;
+}
+
   .top-right {
     position: absolute;
     top: 8px;

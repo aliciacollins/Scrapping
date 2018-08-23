@@ -1,4 +1,13 @@
 // Grab the articles
+document.getElementById("myButton").onclick = function (){
+  $.getJSON("/scrape",function(err,data){
+    if(err!==null) {
+      alert("New Articles are Available to Save!")
+      console.log(data)
+    } else {
+      alert('oops')
+    }
+});
 $.getJSON("/articles", function(data) {
   
   for (var i = 0; i < data.length; i++) {
@@ -8,7 +17,7 @@ $.getJSON("/articles", function(data) {
   }
 });
 
-
+};
 //click p tag
 $(document).on("click", "p", function() {
   $("#notes").empty();
