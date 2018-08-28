@@ -1,0 +1,22 @@
+<div class="article-block">
+    <div class="row">
+        <div class="col card article-container">
+            <a href={{link}}>
+                <b>{{title}}</b>
+            </a> <br>
+            {{summary}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h6>Comments:</h6>
+            {{#each note}} <div>{{body}}</div> {{/each}}
+        </div>
+    </div>
+    <form>
+        <div class="form-group note">
+            <textarea class="form-inline" id="bodyinput" rows="3" placeholder="Any additional comments?"></textarea>
+            <button id = 'submit' type="submit" class="fa fa-thumbs-down submit-btn " data-id={{_id}}>Submit</button>
+        </div>
+    </form>
+</div>

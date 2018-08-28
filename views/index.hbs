@@ -5,7 +5,7 @@
 
         <a class="navbar-brand">NFL Scrapper</a>
         <a href="#" class="navbar-brand">Home</a>
-        <a id="save" class="navbar-brand">Save</a>
+        
         <form class="form-inline  my-2 my-lg-0"></form>
         <button id="myButton" class="btn btn-lg btn-danger my-2 my-sm-0" type="button" value = "Refresh Page">Scrape New Articles</button>
         </form>
@@ -16,19 +16,16 @@
 </div>
     <br><br>
     <h1>Article Scraper</h1>
-    <table>
-        {{#each articles}}
-        <p><b>{{title}}</b></p>
-        <p>{{summary}} {{link}}
-        </p>
-        <hr> {{/each}}
+<container>
+     <table>
+        <div></div>
+        {{#each articles}} 
+        <br>
+        {{> article-partial}} {{/each}}
+       
     </table>
-    <table>
-        <div>Notes</div>
-        {{#each notes}}
-        <p>{{title}}</p>
-         {{/each}}
-    </table>
+</container>
+   
     
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

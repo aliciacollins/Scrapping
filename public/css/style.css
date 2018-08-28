@@ -3,6 +3,8 @@
     position: relative;
     text-align: center;
     color:white;
+    margin: 20px 20px;
+    padding: 10px;
 }
 body {
     /* overflow-y:hidden; */
@@ -24,4 +26,12 @@ img{
     top: 8px;
     right: 16px;
 } 
-  
+
+#wrapper {
+    margin: 20px 20px;
+    padding: 10px;
+}
+
+textarea {
+    width: 100%;
+}
